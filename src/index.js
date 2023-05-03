@@ -10,7 +10,6 @@ const countryList = document.querySelector('ul.country-list');
 const countryInfo = document.querySelector('div.country-info');
 
 const cleanMarkup = ref => (ref.innerHTML = '');
-
 const onInput = e => {
   const inputText = e.target.value.trim();
   if (!inputText) {

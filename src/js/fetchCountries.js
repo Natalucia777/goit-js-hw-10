@@ -10,4 +10,5 @@ const fetchCountries = name => {
     return response.json();
   });
 };
+
 export { fetchCountries };
