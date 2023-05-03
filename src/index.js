@@ -1,13 +1,13 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
-import Notiflix from "notiflix";
-import { Notify } from "notiflix/build/notiflix-notify-aio";
+import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { fetchCountries } from './js/fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
-const searchBox = document.querySelector("input.search-box");
-const countryList = document.querySelector("ul.country-list");
-const countryInfo = document.querySelector("div.country-info");
+const searchBox = document.querySelector('input.search-box');
+const countryList = document.querySelector('ul.country-list');
+const countryInfo = document.querySelector('div.country-info');
 
 const cleanMarkup = ref => (ref.innerHTML = '');
 
@@ -20,18 +20,18 @@ const onInput = e => {
   }
   fetchCountries(inputText)
     .then(data => {
-  console.log(data);
-  if (data.length > 10) {
-    Notify.info('Too many matches found.');
-    return;
-  }
-  renderMarkup(data);
-})
-  .catch(err => {
-    cleanMarkup(countryList);
-    cleanMarkup(countryInfo);
-    Notify.info('There is no contry!');
-  });
+      console.log(data);
+      if (data.length > 10) {
+        Notify.info('Too many matches found.');
+        return;
+      }
+      renderMarkup(data);
+    })
+    .catch(err => {
+      cleanMarkup(countryList);
+      cleanMarkup(countryInfo);
+      Notify.info('There is no contry!');
+    });
 };
 const renderMarkup = data => {
   if (data.length === 1) {
@@ -40,22 +40,28 @@ const renderMarkup = data => {
     countryInfo.innerHTML = markupInfo;
   } else {
     cleanMarkup(countryInfo);
-    const markupData= createMarkup(data);
+    const markupData = createMarkup(data);
     countryList.innerHTML = markupData;
   }
 };
 const createMarkup = data => {
   return data
-    .map(({ name, flags }) =>
-`<li><img src="${flags.png}" alt="${name.official}" width="60" height="40">
-${name.official}</li>`,
-  ).join('');
+    .map(
+      ({ name, flags }) =>
+        `<li><img src="${flags.png}" alt="${name.official}" width="60" height="40">
+${name.official}</li>`
+    )
+    .join('');
 };
 const createInfo = data => {
-  return data.map(({ name, capital, population, flags, languages }) =>
-`<h1><img src= "${flags.png}" alt="${name.official}" width="40" height="40">${name.official}</h1>
+  return data.map(
+    ({ name, capital, population, flags, languages }) =>
+      `<h1><img src= "${flags.png}" alt="${
+        name.official
+      }" width="40" height="40">${name.official}</h1>
 <p>Capital: ${capital}</p>
 <p>Population:${population}</p>
-<p>Language: ${Object.values(languages)}</p>`, );
+<p>Language: ${Object.values(languages)}</p>`
+  );
 };
 searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
