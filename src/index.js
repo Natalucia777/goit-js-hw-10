@@ -31,3 +31,15 @@ fetchCountries(inputText).then(data => {
     Notify.info('There is no contry!');
   });
 };
+const renderMarkup = data => {
+  if (data.length === 1) {
+    cleanMarkup(countryList);
+    const markupData = createMarkup(data);
+    countryInfo.innerHTML = markupData;
+  }
+};
+const createMarkup = data => {
+  return data.map(({ name, flag }) =>
+`<li><img src="${flag.png}" alt="${name.official}" width="60" height="40">
+${name.official}</li>`,
+    ).join(""); };
