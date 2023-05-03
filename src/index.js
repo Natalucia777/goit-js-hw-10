@@ -10,6 +10,7 @@ const countryList = document.querySelector("ul.country-list");
 const countryInfo = document.querySelector("div.country-info");
 
 const cleanMarkup = ref => (ref.innerHTML = '');
+searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 const onInput = e => {
   const inputText = e.target.value.trim();
   if (!inputText) {
@@ -49,7 +50,10 @@ ${name.official}</li>`,
   ).join("");
 };
 const createInfo = data => {
-  return data.map({ name, capital, population, flag, languages }) =>
-`<h1><img src= "${flags.png}" alt="${name.official}" width="40" height="40">${name.official}</h1>`
-  
-}
+  return data.map(({ name, capital, population, flag, languages }) =>
+`<h1><img src= "${flags.png}" alt="${name.official}" width="40" height="40">${name.official}</h1>
+<p>Capital: ${capital}</p>
+<p>Population:${population}</p>
+<p>Language: ${Pbject.values(languages)}</p>`, );
+};
+
