@@ -10,7 +10,7 @@ const countryList = document.querySelector("ul.country-list");
 const countryInfo = document.querySelector("div.country-info");
 
 const cleanMarkup = ref => (ref.innerHTML = '');
-searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+
 const onInput = e => {
   const inputText = e.target.value.trim();
   if (!inputText) {
@@ -18,10 +18,11 @@ const onInput = e => {
     cleanMarkup(countryInfo);
     return;
   }
-fetchCountries(inputText).then(data => {
+  fetchCountries(inputText)
+    .then(data => {
   console.log(data);
-  if (data.lenght > 10) {
-    Notify.info('Many matches found.');
+  if (data.length > 10) {
+    Notify.info('Too many matches found.');
     return;
   }
   renderMarkup(data);
@@ -40,20 +41,21 @@ const renderMarkup = data => {
   } else {
     cleanMarkup(countryInfo);
     const markupData= createMarkup(data);
-    countryInfo.innerHTML = markupData;
+    countryList.innerHTML = markupData;
   }
 };
 const createMarkup = data => {
-  return data.map(({ name, flag }) =>
-`<li><img src="${flag.png}" alt="${name.official}" width="60" height="40">
+  return data
+    .map(({ name, flags }) =>
+`<li><img src="${flags.png}" alt="${name.official}" width="60" height="40">
 ${name.official}</li>`,
-  ).join("");
+  ).join('');
 };
 const createInfo = data => {
-  return data.map(({ name, capital, population, flag, languages }) =>
+  return data.map(({ name, capital, population, flags, languages }) =>
 `<h1><img src= "${flags.png}" alt="${name.official}" width="40" height="40">${name.official}</h1>
 <p>Capital: ${capital}</p>
 <p>Population:${population}</p>
-<p>Language: ${Pbject.values(languages)}</p>`, );
+<p>Language: ${Object.values(languages)}</p>`, );
 };
-
+searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
