@@ -17,10 +17,17 @@ const onInput = e => {
     cleanMarkup(countryInfo);
     return;
   }
-}
 fetchCountries(inputText).then(data => {
   console.log(data);
   if (data.lenght > 10) {
-    
+    Notify.info('Many matches found.');
+    return;
   }
+  renderMarkup(data);
 })
+  .catch(err => {
+    cleanMarkup(countryList);
+    cleanMarkup(countryInfo);
+    Notify.info('There is no contry!');
+  });
+};
