@@ -1,5 +1,4 @@
-const DATA_URL = 'https://restcountries.com/v3.1/name';
-
+const BASE_URL = 'https://restcountries.com/v3.1/name';
 const fetchCountries = name => {
   return fetch(
     `${DATA_URL}/${name}?fields=name,capital,population,flags,languages`
