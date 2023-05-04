@@ -4,7 +4,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { fetchCountries } from './js/fetchCountries.js';
 
 const DEBOUNCE_DELAY = 300;
-const searchBox = document.querySelector('input.search-box');
+const searchBox = document.querySelector('#search-box');
 const countryList = document.querySelector('ul.country-list');
 const countryInfo = document.querySelector('div.country-info');
 
@@ -62,4 +62,5 @@ const createInfo = data => {
 <p>Language: ${Object.values(languages)}</p>`
   );
 };
+
 searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
